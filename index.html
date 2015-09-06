@@ -1,5 +1,11 @@
 <!DOCTYPE HTML>
+
 <html>
+<meta property="og:type"            content="article" /> 
+<meta property="og:url"             content="http://jjjjt.github.io/Umbrella_Movement_Timelapse/" /> 
+<meta property="og:title"           content="Timeline | Umbrella Movement Timelapse" /> 
+<meta property="og:image"           content="http://jjjjt.github.io/Umbrella_Movement_Timelapse/thumbnail.png" /> 
+<meta property="og:description"    content="Timeline of Hong Kong Umbrella Movement Timelapse" />
 <head>
 	<title>Timeline | Umbrella Movement Timelapse</title>
 
@@ -16,10 +22,67 @@
 		font-size: 200%;
 		color: white;
 	}
+
+    .vis-timeline {
+      border: 2px solid black;
+      /*font-family:  purisa, 'comic sans', cursive;*/
+      font-size: 12pt;
+      background: #000000;
+    }
+
+    .vis-item {
+      border-color: black;
+      background-color: black;
+      font-size: 15pt;
+      color: #FFFFFF;
+      box-shadow: 5px 5px 20px rgba(128,128,128, 0.5);
+    }
+	.vis-item-content{
+		font-size: 12pt;
+		background-color: black;
+		border-color: gray;
+		color: #FFFFFF;
+	}
+    .vis-item,
+    .vis-item.vis-line {
+      border-width: 3px;
+    }
+
+    .vis-item.vis-dot {
+      border-width: 10px;
+      border-radius: 10px;
+    }
+
+    .vis-item.vis-selected {
+      border-color: white;
+      background-color: gray;
+    }
+
+    .vis-time-axis .vis-text {
+      color: white;
+      padding-top: 10px;
+      padding-left: 10px;
+    }
+
+    .vis-time-axis .vis-text.vis-major {
+      font-weight: bold;
+    }
+
+    .vis-time-axis .vis-grid.vis-minor {
+      border-width: 2px;
+      border-color: gray;
+    }
+
+    .vis-time-axis .vis-grid.vis-major {
+      border-width: 2px;
+      border-color: #AAAAAA;
+    }
+  
 	</style>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.8.0/vis.min.js"></script>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.8.0/vis.min.css" rel="stylesheet" type="text/css" />
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
 	<script src="https://f.vimeocdn.com/js/froogaloop2.min.js"></script>
 	<!--<script src="../../googleAnalytics.js"></script>-->
 	<script language="JavaScript" type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -181,7 +244,13 @@
 		 if(BrowserDetect.browser=="Chrome" || BrowserDetect.browser=="Safari")
 		 {
 		 	for (var i = 0; i < videos.length; i++) {
+		 		console.log(videos[i]['description']);
+		 		var d = document.createElement('div');
 		 		var thumb = document.createElement('iframe');
+		 		d.appendChild(thumb);
+		 		var para = document.createElement("p");
+		 		d.appendChild(para);
+		 		para.textContent = videos[i]['description'];
 		 		var url = "http://player.vimeo.com/video/" + videos[i].id + "?title=0&byline=0&portrait=0&color=aaaaaa";
 		 		// console.log(url);
 		 		thumb.src = url;
@@ -193,7 +262,7 @@
 		 		thumb.setAttribute('allowFullScreen',true);
 		 		var date = videos[i]['upload_date'];//'2014-04-'+((i+1)%30);
 				// console.log(date);
-				datas.push({id: videoIndex, content: thumb, start: date});
+				datas.push({id: videoIndex, content: d, start: date});
 				videoIndex+=1;
 			}
 
@@ -242,10 +311,18 @@
 			createCall(currentPage);
 		}
 		else{
+			var now = moment().minutes(0).seconds(0).milliseconds(0);
 			console.log(datas);
 			var container = document.getElementById('visualization');
 			var items = new vis.DataSet(datas);
-			var options = {};
+
+			var options = {
+				editable: false,
+				start: '2014-10-02',
+				end: '2014-12-15',
+				zoomMin: 1000 * 60 * 60 * 24 * 3,          // a day
+				zoomMax: 1000 * 60 * 60 * 24 * 10   // three months
+			};
 			var timeline = new vis.Timeline(container, items, options);	
 		}
 		
