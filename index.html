@@ -23,7 +23,6 @@
 	<script src="https://f.vimeocdn.com/js/froogaloop2.min.js"></script>
 	<!--<script src="../../googleAnalytics.js"></script>-->
 	<script language="JavaScript" type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-	<script type="text/javascript" src="Detector.js"></script>
 </head>
 <body>
 
@@ -148,41 +147,54 @@
 
 	};
 	BrowserDetect.init();
-	// Change this to your username to load in your clips
-	var vimeoUserName = 'album/3069424';
-
-	// Tell Vimeo what function to call
-	var callback = 'showThumbs';
-
-	// Set up the URLs
-	var url = 'http://vimeo.com/api/v2/' +vimeoUserName+ '/videos.json?callback=' + callback+'&page=1&per_page=50';
+	
 
 
-	var js = document.createElement('script');
-	js.setAttribute('type', 'text/javascript');
-	js.setAttribute('src', url);
-	document.getElementsByTagName('head').item(0).appendChild(js);
-	console.log(url);
+	
+	var currentPage = 1;
+	createCall(currentPage);
+	function createCall(page){
+
+		// Change this to your username to load in your clips
+		var vimeoUserName = 'album/3069424';
+
+		// Tell Vimeo what function to call
+		var callback = 'showThumbs';
+
+		// Set up the URLs
+		var url = 'http://vimeo.com/api/v2/' +vimeoUserName+ '/videos.json?callback=' + callback+'&page='+currentPage+'&per_page=20';
+
+		var js = document.createElement('script');
+		js.setAttribute('type', 'text/javascript');
+		js.setAttribute('src', url);
+		document.getElementsByTagName('head').item(0).appendChild(js);
+		// console.log(url);
+		
+	}
+	var datas = [];
+	var videoIndex = 0
 	// This function goes through the clips and puts them on the page
 	function showThumbs(videos) {
+		
+
 		 
-		 var datas = [];
 		 if(BrowserDetect.browser=="Chrome" || BrowserDetect.browser=="Safari")
 		 {
 		 	for (var i = 0; i < videos.length; i++) {
 		 		var thumb = document.createElement('iframe');
 		 		var url = "http://player.vimeo.com/video/" + videos[i].id + "?title=0&byline=0&portrait=0&color=aaaaaa";
-		 		console.log(url);
+		 		// console.log(url);
 		 		thumb.src = url;
-		 		thumb.setAttribute('width', "300");
-		 		thumb.setAttribute('height', "179");
+		 		thumb.setAttribute('width', "160");
+		 		thumb.setAttribute('height', "120");
 		 		thumb.setAttribute('frameborder', "0");
 		 		thumb.setAttribute('webkitAllowFullScreen',true);
 		 		thumb.setAttribute('mozallowfullscreen',true);
 		 		thumb.setAttribute('allowFullScreen',true);
 		 		var date = videos[i]['upload_date'];//'2014-04-'+((i+1)%30);
 				// console.log(date);
-				datas.push({id: i, content: thumb, start: date});
+				datas.push({id: videoIndex, content: thumb, start: date});
+				videoIndex+=1;
 			}
 
 		}
@@ -191,10 +203,10 @@
 			
 
 			for (var i = 0; i < videos.length; i++) {
-				console.log(videos[i]);
+				// console.log(videos[i]);
 				var object = document.createElement('object');
-				object.setAttribute('width', "300");
-				object.setAttribute('height', "179");
+				object.setAttribute('width', "160");
+				object.setAttribute('height', "120");
 
 				var param = document.createElement('param');
 				param.setAttribute('allowfullscreen', "true");
@@ -220,15 +232,23 @@
 				embed.setAttribute('width', "300");
 				embed.setAttribute('height', "179");
 				object.appendChild(embed);
-				var date = '2014-04-'+((i+1)%30);
-				datas.push({id: i, content: object, start: date});
+				var date = videos[i]['upload_date'];
+				datas.push({id: videoIndex, content: object, start: date});
+				videoIndex+=1;
 			}
 		}
-
-		var container = document.getElementById('visualization');
-		var items = new vis.DataSet(datas);
-		var options = {};
-		var timeline = new vis.Timeline(container, items, options);
+		if(videos.length==20){
+			currentPage+=1;
+			createCall(currentPage);
+		}
+		else{
+			console.log(datas);
+			var container = document.getElementById('visualization');
+			var items = new vis.DataSet(datas);
+			var options = {};
+			var timeline = new vis.Timeline(container, items, options);	
+		}
+		
 
 
 	}
