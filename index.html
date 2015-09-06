@@ -4,10 +4,12 @@
 
 <head>
 	<meta property="og:type" content="article" /> 
+	<meta property="og:title" content="Timeline | Umbrella Movement Timelapse" />
 	<meta property="og:url" content="http://jjjjt.github.io/Umbrella_Movement_Timelapse/" /> 
-	<meta property="og:title" content="Timeline | Umbrella Movement Timelapse" /> 
+	 
 	<meta property="og:image" content="http://jjjjt.github.io/Umbrella_Movement_Timelapse/thumbnail.png" /> 
 	<meta property="og:description" content="Timeline of Hong Kong Umbrella Movement Timelapse" />
+	<meta property="og:site_name" content="TimelineUmbrellaMovementTimelapse">
 	<title>Timeline | Umbrella Movement Timelapse</title>
 
 	<style>
@@ -245,13 +247,13 @@
 		 if(BrowserDetect.browser=="Chrome" || BrowserDetect.browser=="Safari")
 		 {
 		 	for (var i = 0; i < videos.length; i++) {
-		 		console.log(videos[i]['description']);
+		 		// console.log(videos[i]['description']);
 		 		var d = document.createElement('div');
 		 		var thumb = document.createElement('iframe');
 		 		d.appendChild(thumb);
-		 		var para = document.createElement("p");
-		 		d.appendChild(para);
-		 		para.textContent = videos[i]['description'];
+		 		// var para = document.createElement("p");
+		 		// d.appendChild(para);
+		 		// para.textContent = videos[i]['description'];
 		 		var url = "http://player.vimeo.com/video/" + videos[i].id + "?title=0&byline=0&portrait=0&color=aaaaaa";
 		 		// console.log(url);
 		 		thumb.src = url;
