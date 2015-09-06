@@ -185,8 +185,8 @@
 		 		var url = "http://player.vimeo.com/video/" + videos[i].id + "?title=0&byline=0&portrait=0&color=aaaaaa";
 		 		// console.log(url);
 		 		thumb.src = url;
-		 		thumb.setAttribute('width', "300");
-		 		thumb.setAttribute('height', "179");
+		 		thumb.setAttribute('width', "160");
+		 		thumb.setAttribute('height', "120");
 		 		thumb.setAttribute('frameborder', "0");
 		 		thumb.setAttribute('webkitAllowFullScreen',true);
 		 		thumb.setAttribute('mozallowfullscreen',true);
@@ -205,8 +205,8 @@
 			for (var i = 0; i < videos.length; i++) {
 				// console.log(videos[i]);
 				var object = document.createElement('object');
-				object.setAttribute('width', "300");
-				object.setAttribute('height', "179");
+				object.setAttribute('width', "160");
+				object.setAttribute('height', "120");
 
 				var param = document.createElement('param');
 				param.setAttribute('allowfullscreen', "true");
