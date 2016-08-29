@@ -258,14 +258,14 @@
 		 		var url = "http://player.vimeo.com/video/" + videos[i].id + "?title=0&byline=0&portrait=0&color=aaaaaa";
 		 		// console.log(url);
 		 		thumb.src = url;
-		 		thumb.setAttribute('width', "160");
-		 		thumb.setAttribute('height', "120");
+		 		thumb.setAttribute('width', "320");
+		 		thumb.setAttribute('height', "160");
 		 		thumb.setAttribute('frameborder', "0");
 		 		thumb.setAttribute('webkitAllowFullScreen',true);
 		 		thumb.setAttribute('mozallowfullscreen',true);
 		 		thumb.setAttribute('allowFullScreen',true);
 		 		var date = videos[i]['upload_date'];//'2014-04-'+((i+1)%30);
-				// console.log(date);
+				console.log(videos[i]);
 				datas.push({id: videoIndex, content: d, start: date});
 				videoIndex+=1;
 			}
@@ -278,8 +278,8 @@
 			for (var i = 0; i < videos.length; i++) {
 				// console.log(videos[i]);
 				var object = document.createElement('object');
-				object.setAttribute('width', "160");
-				object.setAttribute('height', "120");
+				object.setAttribute('width', "320");
+				object.setAttribute('height', "160");
 
 				var param = document.createElement('param');
 				param.setAttribute('allowfullscreen', "true");
@@ -302,8 +302,8 @@
 				embed.setAttribute('type', "application/x-shockwave-flash");
 				embed.setAttribute('allowfullscreen', "true");
 				embed.setAttribute('allowscriptaccess', "always");
-				embed.setAttribute('width', "300");
-				embed.setAttribute('height', "179");
+				embed.setAttribute('width', "192");
+				embed.setAttribute('height', "108");
 				object.appendChild(embed);
 				var date = videos[i]['upload_date'];
 				datas.push({id: videoIndex, content: object, start: date});
@@ -322,10 +322,10 @@
 
 			var options = {
 				editable: false,
-				start: '2014-10-02',
+				start: '2014-9-28',
 				end: '2014-12-15',
-				zoomMin: 1000 * 60 * 60 * 24 * 3,          // a day
-				zoomMax: 1000 * 60 * 60 * 24 * 10   // three months
+				zoomMin: 1000 * 60 * 60 * 24 ,          // a day
+				zoomMax: 1000 * 60 * 60 * 24 * 30   // three months
 			};
 			var timeline = new vis.Timeline(container, items, options);	
 		}
