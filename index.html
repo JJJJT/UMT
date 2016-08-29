@@ -264,8 +264,8 @@
 		 		thumb.setAttribute('webkitAllowFullScreen',true);
 		 		thumb.setAttribute('mozallowfullscreen',true);
 		 		thumb.setAttribute('allowFullScreen',true);
-		 		var date = videos[i]['upload_date'];//'2014-04-'+((i+1)%30);
-				console.log(videos[i]);
+		 		var date = getDate(videos[i]);		 		
+				
 				datas.push({id: videoIndex, content: d, start: date});
 				videoIndex+=1;
 			}
@@ -305,7 +305,8 @@
 				embed.setAttribute('width', "192");
 				embed.setAttribute('height', "108");
 				object.appendChild(embed);
-				var date = videos[i]['upload_date'];
+				// var date = videos[i]['upload_date'];
+				var date = getDate(videos[i]);		 		
 				datas.push({id: videoIndex, content: object, start: date});
 				videoIndex+=1;
 			}
@@ -330,6 +331,26 @@
 			var timeline = new vis.Timeline(container, items, options);	
 		}
 		
+
+
+	}
+
+	function getDate(video){
+		var description = video['description'];
+		var dateIndex = description.search('Date : ');
+		var date;
+		if(dateIndex>=0){
+			date = description.substring(dateIndex+7,dateIndex+7+10);
+			console.log('url : '+"http://www.vimeo.com/" + video.id);
+			console.log('date : '+date);
+			return date;
+		}else{
+			console.log('url : '+"http://www.vimeo.com/" + video.id);
+			console.log('title : '+ video['title']);
+			console.log('description : '+description);
+			console.log('upload_date : '+video['upload_date']);
+			return video['upload_date'];//'2014-04-'+((i+1)%30);
+		}
 
 
 	}
